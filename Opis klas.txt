@@ -1,0 +1,24 @@
+Budowa programu:
+
+
+Klasy:
+
+
+    Klasa VisualizationMove -> klasa odpowiedzialna za ukazywanie planszy,
+    animacji ruchu zajmowania pola,
+    wyświetlanie gracza/bota ktory w tym momencie wykonuje ruch.
+    (Wystwietlanie wyniku)
+
+    Funckja WinCheck -> sprawdzanie czy nie nastapilo zwyciestwo,
+    przyjmuje tablice jako parametr
+
+    Klasa AlgorithmAI -> klasa abstrakcyjna, po ktorejm,
+    beda dziedziczyc algorytmy odpowiedzialne za podjecie decyzji.
+
+        AlgorithmRandom -> klasa w ktorej AI w losowy sposob wybiera pole
+
+        AlgorithmSearchDeep -> klasa w ktorej okresla jak gleboko jej metoda
+        od podejmowania decyzji moze zejsc.
+
+
+
