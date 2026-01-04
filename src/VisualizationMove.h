@@ -30,7 +30,6 @@ public:
                 rect.setOutlineColor(sf::Color::Black);
                 rect.setOutlineThickness(2);
                 window.draw(rect);
-
                 sf::CircleShape coin(radius);
                 coin.setOrigin(sf::Vector2f(radius, radius));
                 coin.setPosition(sf::Vector2f(offsetX + j * cellSize + (cellSize / 2.0f), offsetY + i * cellSize + (cellSize / 2.0f)));
