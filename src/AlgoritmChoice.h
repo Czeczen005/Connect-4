@@ -8,9 +8,8 @@ protected:
     Board& board;
 public:
     AlgoritmChoice(Board& _board):board(_board){};
-    virtual int MakeChoise() = 0;
+    virtual int MakeChoice() = 0;
     virtual ~AlgoritmChoice() =default;
-
 };
 
 class Minimax: public AlgoritmChoice {

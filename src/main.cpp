@@ -55,7 +55,7 @@ int main()
     HumanPlayer p1 = HumanPlayer(BoardState::Player1);
     HumanPlayer p2 = HumanPlayer(BoardState::Player2);
     AlgorithmNaive AI1 = AlgorithmNaive(logicBoard);
-    AlgorithmRandom AI2 = AlgorithmRandom();
+    AlgorithmRandom AI2 = AlgorithmRandom(logicBoard);
     VisualizationMove visualizer;
     sf::ContextSettings contextSettings;
     contextSettings.antiAliasingLevel = 100;

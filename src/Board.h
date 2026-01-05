@@ -4,6 +4,7 @@
 
 #ifndef CMAKESFMLPROJECT_BOARD_H
 #define CMAKESFMLPROJECT_BOARD_H
+#include <iostream>
 
 enum class BoardState {
     Empty = 0,
