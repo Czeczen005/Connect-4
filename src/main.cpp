@@ -3,6 +3,7 @@
 #include "AlgorithmAI.h"
 #include "Board.h"
 #include "VisualizationMove.h"
+
 // 6x7 - plansza
 
 void PlayerVsPlayer(Board& board, HumanPlayer& p1, HumanPlayer& p2) {
@@ -40,11 +41,21 @@ void PlayerVsPlayer(Board& board, HumanPlayer& p1, HumanPlayer& p2) {
     }
 }
 
+
+void AIvsAI() {
+
+}
+
+
+
 int main()
 {
     Board logicBoard;
+    std::srand(std::time(nullptr));
     HumanPlayer p1 = HumanPlayer(BoardState::Player1);
     HumanPlayer p2 = HumanPlayer(BoardState::Player2);
+    AlgorithmNaive AI1 = AlgorithmNaive(logicBoard);
+    AlgorithmRandom AI2 = AlgorithmRandom();
     VisualizationMove visualizer;
     sf::ContextSettings contextSettings;
     contextSettings.antiAliasingLevel = 100;
