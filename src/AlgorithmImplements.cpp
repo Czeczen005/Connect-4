@@ -1,4 +1,5 @@
-#include "AlgoritmChoice.h"
+
+#include "AlgorithmChoice.h"
 #include <vector>
 #include <cstdlib>
 const int SCORE_WIN = 100000;
@@ -70,3 +71,47 @@ int Minimax::minimaxRecursive(int depth, bool isMaximizing, int lastRow, int las
         return canMove ? minEval : 0;
     }
 }
+int AlgoritmNaive::MakeChoice() {
+    for (int c = 0; c < board.getCols(); c++) {
+        if (board.GetField(0, c) == BoardState::Empty) {
+            return c;
+        }
+    }
+    return -1;
+}
+
+
+int AlgorithmGreedy::MakeChoice() {
+   for (int c = 0; c < board.getCols(); c++) {
+            if (board.GetField(0, c) == BoardState::Empty) {
+                int r = board.MakeMove(c, me);
+                if (board.CheckWin(r, c, me)) {
+                    board.UndoMove(c);
+                    return c;
+                }
+                board.UndoMove(c);
+            }
+        }
+        for (int c = 0; c < board.getCols(); c++) {
+            if (board.GetField(0, c) == BoardState::Empty) {
+                int r = board.MakeMove(c, opponent);
+                if (board.CheckWin(r, c, opponent)) {
+                    board.UndoMove(c);
+                    return c;
+                }
+                board.UndoMove(c);
+            }
+        }
+        std::vector<int> potentialMove;
+        for (int c = 0; c<board.getCols(); c++) {
+            if (board.GetField(0, c) == BoardState::Empty) {
+                potentialMove.push_back(c);
+            }
+        }
+        if (!potentialMove.empty()) {
+            return potentialMove[std::rand() % potentialMove.size()];
+        }
+        return -1;
+    }
+
+

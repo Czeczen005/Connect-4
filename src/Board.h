@@ -4,6 +4,7 @@
 
 #ifndef CMAKESFMLPROJECT_BOARD_H
 #define CMAKESFMLPROJECT_BOARD_H
+
 #include <iostream>
 
 enum class BoardState {
@@ -14,8 +15,8 @@ enum class BoardState {
 
 class Board {
     // zmienne static constexpr -> wartosci staja się znane w czasie kompilacji
-    static constexpr int rows = 7;
-    static constexpr  int cols = 6;
+    static constexpr int rows = 6;
+    static constexpr  int cols = 7;
     BoardState grid[rows][cols] = {};
 public:
     // Konstruktor

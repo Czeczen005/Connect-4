@@ -16,8 +16,8 @@ add_executable(main src/main.cpp
         src/VisualizationMove.h
         src/AlgorithmAI.h
         src/Board.h
-        src/AlgoritmChoice.h
-        src/AlgoritmImplements.cpp
+        src/AlgorithmImplements.cpp
+        src/AlgorithmChoice.h
 )
 target_compile_features(main PRIVATE cxx_std_17)
 target_link_libraries(main PRIVATE SFML::Graphics)
