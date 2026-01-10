@@ -1,10 +1,11 @@
-
 #include "AlgorithmChoice.h"
 #include <vector>
 #include <cstdlib>
 const int SCORE_WIN = 100000;
 const int SCORE_LOSE = -100000;
 
+
+// dodanie jakies herystyki by oprocz losowego byla jakas taktyka
 int Minimax::MakeChoice() {
     int bestScore = -999999999;
     int bestMove = -1;
@@ -32,7 +33,6 @@ int Minimax::MakeChoice() {
 
 int Minimax::minimaxRecursive(int depth, bool isMaximizing, int lastRow, int lastCol) {
     BoardState prevPlayer = isMaximizing ? opponent : me;
-
     if (board.CheckWin(lastRow, lastCol, prevPlayer)) {
         if (prevPlayer == me) return SCORE_WIN + depth;
         else return SCORE_LOSE - depth;
@@ -71,6 +71,7 @@ int Minimax::minimaxRecursive(int depth, bool isMaximizing, int lastRow, int las
         return canMove ? minEval : 0;
     }
 }
+
 int AlgoritmNaive::MakeChoice() {
     for (int c = 0; c < board.getCols(); c++) {
         if (board.GetField(0, c) == BoardState::Empty) {
@@ -80,8 +81,7 @@ int AlgoritmNaive::MakeChoice() {
     return -1;
 }
 
-
-int AlgorithmGreedy::MakeChoice() {
+int AlgorithmGreedyRandom::MakeChoice() {
    for (int c = 0; c < board.getCols(); c++) {
             if (board.GetField(0, c) == BoardState::Empty) {
                 int r = board.MakeMove(c, me);

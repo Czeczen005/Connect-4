@@ -22,3 +22,16 @@ Klasy:
 
 
 
+
+
+
+BADANIA:
+
+CZY KOLEJNOSC MA ZNACZENIA? (np. MINIMAX z glebokoscia 2 i drugi z 4: zliczenie wygranych)
+
+GreedyRandom vs Greedy -> kolejnosc oraz jak rozkladaja sie wygrane
+
+Znalezienie maksymalnej glebokosci dla minimaxa dla ktorej mozna wykonac program ? -> TO W ZASADZIE POZWOLI NAM ZDEFINIOWAC JAK DUZA MUSI BYC PLANSZA (RACZEJ)
+Do tego zliczenie czasow jak z wrasta czas jednego ruchu.
+
+Minimax z losowym wyborem najlepsze ruchu vs z jakas strategia -> pojedynki.

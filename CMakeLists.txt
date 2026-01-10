@@ -18,6 +18,8 @@ add_executable(main src/main.cpp
         src/Board.h
         src/AlgorithmImplements.cpp
         src/AlgorithmChoice.h
+        src/functionGame.cpp
+        src/functionGame.h
 )
 target_compile_features(main PRIVATE cxx_std_17)
 target_link_libraries(main PRIVATE SFML::Graphics)

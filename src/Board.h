@@ -31,6 +31,18 @@ public:
     static int getRows(){return rows;}
     static int getCols(){return cols;}
 
+    // Potrzebne przy sprawdzaniu remisu
+    int freeFields() {
+        int countZero = 0;
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                if (grid[i][j] == BoardState::Empty) {
+                    countZero++;
+                }
+            }
+        }
+        return countZero;
+    }
     // Podglad tablicy
     void ShowBoard() {
         for (int i = 0; i< rows; i++) {
@@ -40,10 +52,17 @@ public:
             std::cout << std::endl;
         }
     }
+    void clearBoard() {
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                grid[i][j] = BoardState::Empty;
+            }
+        }
+    }
 
     // Metoda do wrzucania żeton-a (zajmowanie pola)
     int MakeMove(int col, BoardState player) {
-        if (col < 0 || col >= cols) return false;
+        if (col < 0 || col >= cols) return -1;
         for (int i = rows - 1; i > -1; i--) {
             if (grid[i][col] == BoardState::Empty) {
                 grid[i][col] = player;
@@ -69,7 +88,6 @@ public:
         // Tablice kierunkow: {ROW, COL}
         // Poziom {0,1}, Pion {1, 0}. Skos \ {1, 1}, Skos / {1, -1}
         int direction[4][2] = {{0,1}, {1, 0}, {1, 1}, {1, -1}};
-
         for (auto& d : direction) {
             int dRow = d[0];
             int dCol = d[1];
