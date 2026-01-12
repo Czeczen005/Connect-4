@@ -24,14 +24,44 @@ Klasy:
 
 
 
-
+DWUKROTNIE - |, V - WYKONANE
 BADANIA:
 
 CZY KOLEJNOSC MA ZNACZENIA? (np. MINIMAX z glebokoscia 2 i drugi z 4: zliczenie wygranych)
 
-GreedyRandom vs Greedy -> kolejnosc oraz jak rozkladaja sie wygrane
 
-Znalezienie maksymalnej glebokosci dla minimaxa dla ktorej mozna wykonac program ? -> TO W ZASADZIE POZWOLI NAM ZDEFINIOWAC JAK DUZA MUSI BYC PLANSZA (RACZEJ)
-Do tego zliczenie czasow jak z wrasta czas jednego ruchu.
+V| GreedyRandom vs Greedy -> kolejnosc oraz jak rozkladaja sie wygrane
 
-Minimax z losowym wyborem najlepsze ruchu vs z jakas strategia -> pojedynki.
+V | Minimax Random vs Minimax MinDistance -> glebokosc 2 - dopoki da rade
+
+
+V |Minimax -> wplyw glebokosci na czas rozgrywki i podjecia decyzji -> (2 -> ile da sie)
+
+V |Minimax MINIDISTANCE vs Greedy -> pojedynki.
+
+V |Na jakiej planszy bruteForce - jaka liczba stanow i jaka glebokosc
+
+10 000 - LICZBA SYMULACJI
+MINIMAX RANDOM VS MINIMAX MINDISTANCE:
+2 V
+4 V
+6 V
+8 V
+10 V/- (tylko 2525)
+
+MINIMAX MINDISTANCE VS MINIMAX RANDOM:
+2 V
+4 V
+6 V
+8 V
+10 V/- (tylko 2525)
+
+1000
+MINIMAX MINDISTANCE VS RANDOM (CZAS DECYZJI):
+2 V
+4 V
+6 V
+8 V
+10 V
+14 V 100(DLUGO)
+

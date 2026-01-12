@@ -15,8 +15,8 @@ enum class BoardState {
 
 class Board {
     // zmienne static constexpr -> wartosci staja się znane w czasie kompilacji
-    static constexpr int rows = 6;
-    static constexpr  int cols = 7;
+    static constexpr int rows = 4;
+    static constexpr  int cols = 6;
     BoardState grid[rows][cols] = {};
 public:
     // Konstruktor

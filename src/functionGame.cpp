@@ -1,3 +1,4 @@
+#include <fstream>
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include "AlgorithmAI.h"
@@ -32,9 +33,15 @@ AlgoritmChoice* createStrategy(Board& board, BoardState playerID) {
     switch (choice) {
         case 1:
             int depth;
+            int variant;
             std::cout << "Podaj glebokosc dla Minimax";
             std::cin >> depth;
-            return new Minimax(board, playerID, depth);
+            std::cout <<"1.RandomChoose"<<std::endl<<"2.MinDistance"<<std::endl;
+            std::cin >> variant;
+            if (variant == 1) {
+                return new Minimax(board, playerID, depth, true);
+            }
+            return new Minimax(board, playerID, depth, false);
         case 2:
             return new AlgoritmRandom(board);
         case 3:
@@ -110,7 +117,7 @@ void PlayerVsAI(Board& board, HumanPlayer& p1, AlgoritmChoice* ai,bool& isTurnAi
          //  TURA AI 2
     else {
         std::cout << "RUCH AI 2" << std::endl;
-        int column = ai->MakeChoice();
+        int column = ai->makeChoice();
         if (column != -1){
             int row = board.MakeMove(column, BoardState::Player2);
             if (board.CheckWin(row, column, BoardState::Player2)) {
@@ -128,46 +135,56 @@ void PlayerVsAI(Board& board, HumanPlayer& p1, AlgoritmChoice* ai,bool& isTurnAi
 }
 
 // Funkcja AI vs AI
-void AIvsAI(Board &board, AlgoritmChoice *ai1, AlgoritmChoice *ai2, bool& isTurnAi1, bool& somebodyWon) {
+void AIvsAI(Board &board, AlgoritmChoice *ai1, AlgoritmChoice *ai2, bool& isTurnAi1, bool& somebodyWon, std::ofstream& plikout) {
     // TURA AI 1
     if (isTurnAi1) {
-        std::cout << "RUCH AI 1" << std::endl;
-        int column = ai1->MakeChoice();
+        //std::cout << "RUCH AI 1" << std::endl;
+        int column = ai1->makeChoice();
         if (column != -1) {
             int row = board.MakeMove(column, BoardState::Player1);
             if (board.CheckWin(row, column, BoardState::Player1)) {
                 std::cout <<"Wygral AI - " <<ai1->getName()<< std::endl;
                 somebodyWon = true;
+                plikout << ai1->getName();
+                plikout << std::endl;
             }
             isTurnAi1 = false; // Przekazanie tury
         } else {
             std::cout<<"REMIS (brak ruchow)"<<std::endl;
             somebodyWon = true;
+            plikout << "Remis";
+            plikout << std::endl;
         }
     }
     // TURA AI 2
     else {
-        std::cout << "RUCH AI 2" << std::endl;
-        int column = ai2->MakeChoice();
+        //std::cout << "RUCH AI 2" << std::endl;
+        int column = ai2->makeChoice();
         if (column != -1){
             int row = board.MakeMove(column, BoardState::Player2);
             if (board.CheckWin(row, column, BoardState::Player2)) {
                 std::cout <<"Wygral AI - " <<ai2->getName()<< std::endl;
                 somebodyWon = true;
+                plikout << ai2->getName();
+                plikout << std::endl;
             }
             isTurnAi1 = true; // Przekazanie tury
         } else {
             std::cout<<"REMIS (brak ruchow)"<<std::endl;
             somebodyWon = true;
+            plikout << "Remis";
+            plikout << std::endl;
         }
     }
 }
 
 void OneGame() {
     Board logicBoard;
+    std::ofstream plikout;
+    plikout.open("niewazne.txt");
     // Gracze ludzcy
-    HumanPlayer p1 = HumanPlayer(BoardState::Player1);
-    HumanPlayer p2 = HumanPlayer(BoardState::Player2);
+    auto p1 = HumanPlayer(BoardState::Player1);
+    auto p2 = HumanPlayer(BoardState::Player2);
     // AI
     AlgoritmChoice* ai1 = nullptr;
     AlgoritmChoice* ai2 = nullptr;
@@ -188,7 +205,7 @@ void OneGame() {
     int modeInput;
     std::cin >> modeInput;
     modeInput += 1;
-    GameMode gameMode = static_cast<GameMode>(modeInput);
+    auto gameMode = static_cast<GameMode>(modeInput);
     if (gameMode == GameMode::PlayerVsAI) {
         ai2 = createStrategy(logicBoard, BoardState::Player2);
     }
@@ -227,7 +244,7 @@ void OneGame() {
                     break;
                 case GameMode::AIvsAI:
                     waitSeconds(0.5f);
-                    AIvsAI(logicBoard, ai1, ai2, isTurnAi1, ended);
+                    AIvsAI(logicBoard, ai1, ai2, isTurnAi1, ended,plikout);
                     break;
                 default:
                     std::cout<<"nwm po co to ale jest "<<std::endl;
@@ -239,9 +256,11 @@ void OneGame() {
 
 void Simulation(int numberSymulation) {
     Board logicBoard;
+    std::ofstream plikout;
+    plikout.open("wygrane.txt");
     // Gracze ludzcy
-    HumanPlayer p1 = HumanPlayer(BoardState::Player1);
-    HumanPlayer p2 = HumanPlayer(BoardState::Player2);
+    auto p1 = HumanPlayer(BoardState::Player1);
+    auto p2 = HumanPlayer(BoardState::Player2);
     // AI
     AlgoritmChoice* ai1 = nullptr;
     AlgoritmChoice* ai2 = nullptr;
@@ -250,7 +269,7 @@ void Simulation(int numberSymulation) {
     int modeInput;
     std::cin >> modeInput;
     modeInput += 1;
-    GameMode gameMode = static_cast<GameMode>(modeInput);
+    auto gameMode = static_cast<GameMode>(modeInput);
     if (gameMode == GameMode::PlayerVsAI) {
         ai2 = createStrategy(logicBoard, BoardState::Player2);
     }
@@ -276,11 +295,13 @@ void Simulation(int numberSymulation) {
                     PlayerVsAI(logicBoard, p1, ai2, isTurnAi1, ended);
                     break;
                 case GameMode::AIvsAI:
-                    AIvsAI(logicBoard, ai1, ai2, isTurnAi1, ended);
+                    AIvsAI(logicBoard, ai1, ai2, isTurnAi1, ended, plikout);
+                    ended = true;
                     break;
                 default:
                     std::cout<<"nwm po co to ale jest "<<std::endl;
             }
+
         }
     }
 }

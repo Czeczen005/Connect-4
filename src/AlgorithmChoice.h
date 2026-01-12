@@ -10,7 +10,7 @@ protected:
     Board& board;
 public:
     AlgoritmChoice(Board& _board):board(_board){};
-    virtual int MakeChoice() = 0;
+    virtual int makeChoice() = 0;
     virtual std::string getName() const = 0;
     virtual ~AlgoritmChoice() =default;
 
@@ -21,22 +21,29 @@ class Minimax: public AlgoritmChoice {
     BoardState me;
     BoardState opponent;
     int maxDepth;
-    int minimaxRecursive(int depth, bool isMaximizing, int lastRow, int lastCol);
+    bool isRandom;
+    int minimaxRecursive(int depth, bool isMaximizing, int lastRow, int lastCol, int alpha, int beta);
     public:
-    Minimax(Board& _board, BoardState _me, int _depth): AlgoritmChoice(_board), me(_me), maxDepth(_depth) {
+    Minimax(Board& _board, BoardState _me, int _depth, bool variant): AlgoritmChoice(_board), me(_me), maxDepth(_depth) {
         opponent = (me == BoardState::Player1) ? BoardState::Player2 : BoardState::Player1;
+        isRandom = variant;
+
     };
-    int MakeChoice() override;
+    int makeChoice() override;
     std::string getName() const override {
-        return "Minimax";
+        if (isRandom)return "Minimax-Random";
+        return "Minimax-MinDistance";
     }
+    static int minimaxRandomchoose(std::vector<int> bestMoves);
+    int minimaxMinDistance(std::vector<int> bestMoves);
+    bool getIsRandom(){return isRandom;}
 };
 
 
 class AlgoritmRandom: public AlgoritmChoice {
 public:
 AlgoritmRandom(Board& _board): AlgoritmChoice(_board) {};
-    int MakeChoice() override {
+    int makeChoice() override {
         std::vector<int> availableCols;
         for (int c = 0; c < board.getCols(); c++) {
             if (board.GetField(0, c) == BoardState::Empty) {
@@ -58,7 +65,7 @@ AlgoritmRandom(Board& _board): AlgoritmChoice(_board) {};
 class AlgoritmNaive: public AlgoritmChoice {
 public:
     AlgoritmNaive(Board& _board): AlgoritmChoice(_board) {};
-    int MakeChoice() override;
+    int makeChoice() override;
     std::string getName() const override {
         return "Naive";
     }
@@ -72,7 +79,7 @@ public:
     AlgorithmGreedyRandom(Board& _board, BoardState _me): AlgoritmChoice(_board), me(_me) {
         opponent = (me == BoardState::Player1) ? BoardState::Player2 : BoardState::Player1;
     };
-    int MakeChoice() override;
+    int makeChoice() override;
     std::string getName() const override {
         return "GreedyRandom";
     }
@@ -86,16 +93,14 @@ class AlgoritmGreedy: public AlgoritmChoice {
     public:
     AlgoritmGreedy(Board& _board, BoardState _me): AlgoritmChoice(_board), me(_me) {
         opponent = (me == BoardState::Player1) ? BoardState::Player2 : BoardState::Player1;
-        move = new Minimax(board, me, 1);
+        move = new Minimax(board, me, 1, true);
     }
-    int MakeChoice() override {
-        if (move) {
-            return move->MakeChoice();
-        }
-        return -1;
-    };
+    int makeChoice() override;
     std::string getName() const override {
         return "AlgoritmGreedy";
+    }
+    ~AlgoritmGreedy() override {
+        delete move;
     }
 };
 
@@ -108,11 +113,11 @@ public:
     AlgorithmBruteForce(Board& _board, BoardState _me): AlgoritmChoice(_board), me(_me) {
         opponent = (me == BoardState::Player1) ? BoardState::Player2 : BoardState::Player1;
         maxDepth = board.getRows() * board.getCols();
-        move = new Minimax(board, me, maxDepth);
+        move = new Minimax(board, me, maxDepth, true);
     };
-    int MakeChoice() override {
+    int makeChoice() override {
         if(move) {
-            return move->MakeChoice();
+            return move->makeChoice();
         }
         return -1;
     };
