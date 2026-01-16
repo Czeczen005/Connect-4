@@ -21,7 +21,7 @@ int main()
     }else if (modeInput == 2) {
         OneGame();
     }else {
-        std::cout<<"Jestes debilem" << std::endl;
+        std::cout<<" " << std::endl;
     }
     return 0;
 }

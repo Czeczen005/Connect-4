@@ -304,7 +304,7 @@ void Simulation(int numberSymulation) {
                     AIvsAI(logicBoard, ai1, ai2, isTurnAi1, ended, plikout);
                     break;
                 default:
-                    std::cout<<"nwm po co to ale jest "<<std::endl;
+                    std::cout<<" "<<std::endl;
             }
             if (ended) {
                 std::ofstream plik("liczbaRuchow.txt", std::ios::app);
