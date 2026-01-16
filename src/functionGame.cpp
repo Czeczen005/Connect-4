@@ -1,6 +1,8 @@
 #include <fstream>
 #include <SFML/Graphics.hpp>
 #include <iostream>
+#include <random>
+
 #include "AlgorithmAI.h"
 #include "Board.h"
 #include "VisualizationMove.h"
@@ -279,6 +281,7 @@ void Simulation(int numberSymulation) {
     }
     bool isTurnAi1 = true;
     for (int i = 0; i < numberSymulation; i++) {
+        int licznik = 0;
         bool ended = false;
         logicBoard.clearBoard();
         while (!ended){
@@ -295,13 +298,21 @@ void Simulation(int numberSymulation) {
                     PlayerVsAI(logicBoard, p1, ai2, isTurnAi1, ended);
                     break;
                 case GameMode::AIvsAI:
+                    if (!isTurnAi1) {
+                        licznik++;
+                    }
                     AIvsAI(logicBoard, ai1, ai2, isTurnAi1, ended, plikout);
-                    ended = true;
                     break;
                 default:
                     std::cout<<"nwm po co to ale jest "<<std::endl;
             }
-
+            if (ended) {
+                std::ofstream plik("liczbaRuchow.txt", std::ios::app);
+                if (plik.is_open()) {
+                    plik << licznik++ << std::endl;
+                    plik.close();
+                }
+            }
         }
     }
 }
